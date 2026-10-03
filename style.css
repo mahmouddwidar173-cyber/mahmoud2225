@@ -1,0 +1,369 @@
+/* ==========================================
+   1. المتغيرات والتهيئة العامة (MEDICAL BLUE PALETTE)
+   ========================================== */
+:root {
+  /* ألوان المجال الطبي الأساسية */
+  --primary: #0284c7;           /* أزرق طبي أساسي (Medical Teal/Cyan Blue) */
+  --primary-hover: #0369a1;     /* أزرق غامق عند التمرير */
+  --primary-light: #e0f2fe;     /* أزرق سماوي فاتح جداً خلفيات الكروت */
+  
+  --success: #0d9488;           /* أخضر زمردي طبي للتأكيد والـ Done */
+  --success-hover: #0f766e;
+  
+  --danger: #e11d48;            /* أحمر طبي هادئ للإلغاء والـ No */
+  --danger-hover: #be123c;
+  
+  --warning: #d97706;           /* برتقالي هادئ للحالات المعلقة */
+  
+  /* الخلفيات والنصوص */
+  --bg-color: #f0f9ff;          /* خلفية الموقع: أزرق أبيض هادئ جداً ونظيف */
+  --card-bg: #ffffff;          /* أبيض ناصع للكروت والبطاقات */
+  --text-main: #0c4a6e;         /* كحلي غامق بديل للأسود للنصوص الرئيسية */
+  --text-muted: #64748b;        /* رمادي أزرق للنصوص الثانوية */
+  --border-color: #bae6fd;      /* حدود زرقاء فاتحة وناعمة جداً */
+  
+  /* الحواف والظلال */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --shadow-sm: 0 1px 3px rgba(2, 132, 199, 0.08);
+  --shadow-md: 0 4px 12px -2px rgba(2, 132, 199, 0.12);
+  --shadow-lg: 0 10px 25px -5px rgba(2, 132, 199, 0.18);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  direction: rtl;
+  min-height: 100vh;
+}
+
+/* عناصر الإخفاء والتفعيل */
+.hidden { display: none !important; }
+
+/* ==========================================
+   2. الأزرار والعناصر المشتركة (BUTTONS & INPUTS)
+   ========================================== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 18px;
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-primary { background-color: var(--primary); color: white; }
+.btn-primary:hover { background-color: var(--primary-hover); }
+
+.btn-success { background-color: var(--success); color: white; }
+.btn-success:hover { background-color: var(--success-hover); }
+
+.btn-danger { background-color: var(--danger); color: white; }
+.btn-danger:hover { background-color: var(--danger-hover); }
+
+.btn-outline-danger { background-color: transparent; border: 1px solid var(--danger); color: var(--danger); }
+.btn-outline-danger:hover { background-color: var(--danger); color: white; }
+
+.btn-block { width: 100%; }
+.btn-lg { padding: 14px 24px; font-size: 16px; border-radius: var(--radius-md); }
+
+.form-group {
+  margin-bottom: 16px;
+  text-align: right;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--text-main);
+}
+
+.form-group input, .form-group select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  font-size: 15px;
+  outline: none;
+  background-color: #f8fafc;
+}
+
+.form-group input:focus, .form-group select:focus {
+  border-color: var(--primary);
+  background-color: #ffffff;
+  box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
+}
+
+/* ==========================================
+   3. شاشة تسجيل الدخول (LOGIN SCREEN)
+   ========================================== */
+#loginScreen {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.login-card {
+  background: var(--card-bg);
+  padding: 36px 32px;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  width: 100%;
+  max-width: 420px;
+  text-align: center;
+  border: 1px solid var(--border-color);
+}
+
+.login-card .logo h2 { color: var(--primary); font-size: 28px; margin-bottom: 4px; font-weight: 800; }
+.login-card .logo p { color: var(--text-muted); font-size: 14px; margin-bottom: 24px; }
+
+/* ==========================================
+   4. شريط التنقل (NAVBAR)
+   ========================================== */
+.navbar {
+  background: var(--card-bg);
+  border-bottom: 1px solid var(--border-color);
+  padding: 14px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: var(--shadow-sm);
+}
+
+.navbar-brand { display: flex; align-items: center; gap: 12px; font-weight: bold; font-size: 20px; color: var(--primary); }
+.badge { background: var(--primary-light); color: var(--primary-hover); padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; }
+.badge-success { background: #ccfbf1; color: var(--success-hover); }
+
+.nav-links { display: flex; gap: 8px; }
+.nav-btn {
+  background: none;
+  border: none;
+  padding: 8px 16px;
+  font-weight: 600;
+  color: var(--text-muted);
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+}
+.nav-btn.active { background: var(--primary-light); color: var(--primary); }
+
+.user-info { display: flex; align-items: center; gap: 12px; font-size: 14px; font-weight: 600; }
+
+/* ==========================================
+   5. الشاشة الرئيسية والـ QUEUE (DASHBOARD)
+   ========================================== */
+.main-content { max-width: 1200px; margin: 28px auto; padding: 0 16px; }
+
+.scan-cta-card {
+  background: linear-gradient(135deg, #0284c7, #0369a1);
+  color: white;
+  padding: 28px;
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 28px;
+  box-shadow: var(--shadow-md);
+}
+
+.cta-info h3 { font-size: 22px; margin-bottom: 6px; font-weight: 700; }
+.cta-info p { font-size: 14px; opacity: 0.9; }
+
+/* كروت الإحصائيات */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.stat-card {
+  background: var(--card-bg);
+  padding: 20px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-sm);
+}
+.stat-card h4 { font-size: 14px; color: var(--text-muted); margin-bottom: 8px; }
+.stat-card .stat-number { font-size: 32px; font-weight: 800; }
+.stat-card.yellow .stat-number { color: var(--warning); }
+.stat-card.green .stat-number { color: var(--success); }
+.stat-card.red .stat-number { color: var(--danger); }
+
+/* شبكة بطاقات المنتظر (Pending Queue) */
+.section-container { margin-top: 24px; }
+.section-header { margin-bottom: 16px; }
+.section-header h3 { font-size: 19px; color: var(--text-main); font-weight: 700; }
+.sub-text { font-size: 13px; color: var(--text-muted); }
+
+.queue-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.queue-card {
+  background: var(--card-bg);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.queue-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+}
+
+.card-img-wrapper img { width: 100%; height: 160px; object-fit: cover; }
+
+.card-details { padding: 16px; display: flex; flex-direction: column; gap: 4px; flex-grow: 1; }
+.patient-name { font-weight: 700; font-size: 16px; color: var(--text-main); }
+.card-id, .provider, .time-stamp { font-size: 13px; color: var(--text-muted); }
+
+.card-actions {
+  display: flex;
+  gap: 8px;
+  padding: 12px 16px;
+  background: #f8fafc;
+  border-top: 1px solid var(--border-color);
+}
+.card-actions button { flex: 1; }
+
+/* ==========================================
+   6. جدول الأرشيف الشهري (ARCHIVE TABLE)
+   ========================================== */
+.archive-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.archive-filters { display: flex; gap: 12px; align-items: center; }
+.archive-filters select { padding: 10px; border-radius: var(--radius-sm); border: 1px solid var(--border-color); }
+
+.table-responsive {
+  background: var(--card-bg);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+  overflow-x: auto;
+  box-shadow: var(--shadow-sm);
+}
+
+.data-table { width: 100%; border-collapse: collapse; text-align: right; font-size: 14px; }
+.data-table th, .data-table td { padding: 14px 18px; border-bottom: 1px solid var(--border-color); }
+.data-table th { background: var(--primary-light); color: var(--text-main); font-weight: 700; }
+
+/* ==========================================
+   7. النوافذ المنبثقة (MODALS)
+   ========================================== */
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(12, 74, 110, 0.5);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  padding: 16px;
+}
+
+.modal-card {
+  background: var(--card-bg);
+  border-radius: var(--radius-lg);
+  width: 100%;
+  max-width: 500px;
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+}
+.modal-sm { max-width: 400px; }
+
+.modal-header {
+  padding: 18px 20px;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--primary-light);
+}
+.modal-header h3 { color: var(--text-main); font-size: 18px; font-weight: 700; }
+.close-modal-btn { background: none; border: none; font-size: 24px; cursor: pointer; color: var(--text-muted); }
+
+.modal-body { padding: 22px; }
+.modal-desc { font-size: 14px; color: var(--text-muted); margin-bottom: 16px; }
+
+.camera-frame {
+  height: 240px;
+  background: #0f172a;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  color: white;
+}
+.guide-box {
+  position: absolute;
+  border: 2px dashed var(--primary);
+  width: 80%;
+  height: 70%;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  background: rgba(2, 132, 199, 0.15);
+  color: #f0f9ff;
+}
+
+.modal-footer { padding: 16px 20px; background: #f8fafc; border-top: 1px solid var(--border-color); }
+
+/* ==========================================
+   8. تجاوب الشاشات للموبايل (RESPONSIVE MOBILE)
+   ========================================== */
+@media (max-width: 768px) {
+  .scan-cta-card { flex-direction: column; text-align: center; gap: 16px; }
+  .navbar { padding: 12px 16px; }
+  .nav-btn { font-size: 13px; padding: 6px 10px; }
+  .user-info span { display: none; }
+}
+/* ==========================================
+   تنسيق رسالة الخطأ الأنيقة في شاشة الدخول
+   ========================================== */
+.error-msg {
+  background-color: #ffe4e6;
+  color: #e11d48;
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  margin-bottom: 16px;
+  text-align: center;
+  border: 1px solid #fecdd3;
+  font-weight: 600;
+}

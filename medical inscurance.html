@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CareScan - نظام مسح وإدارة كروت التأمين</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ========================================== -->
+  <!-- 1. شاشة تسجيل الدخول (LOGIN SCREEN)       -->
+  <!-- ========================================== -->
+  <section id="loginScreen" class="screen active-screen">
+    <div class="login-card">
+      <div class="logo">
+        <h2>CareScan 🏥</h2>
+        <p>نظام مسح وإدارة كروت التأمين الطبي</p>
+      </div>
+      
+     <form id="loginForm">
+        <div class="form-group">
+          <label for="username">اسم المستخدم</label>
+          <input type="text" id="username" placeholder="أدخل اسم المستخدم" required>
+        </div> 
+
+        <div class="form-group">
+          <label for="password">كلمة المرور</label>
+          <input type="password" id="password" placeholder="أدخل كلمة المرور" required>
+        </div>
+
+        <div class="form-group">
+          <label for="userRole">الدور / الصلاحية</label>
+            <option value="nurse">ممرض / موظف التقاط (Nurse/Scanner)</option>
+            <option value="admin">مدير النظام / دكتور (Admin/Doctor)</option>
+          </select>
+        </div>
+        <div id="loginErrorMsg" class="error-msg hidden">⚠️ اسم المستخدم أو كلمة المرور أو الدور المختار غير صحيح!</div>
+
+        <button type="submit" class="btn btn-primary btn-block">دخول النظام</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- ========================================== -->
+  <!-- شريط التنقل العلوي (MAIN NAVBAR)          -->
+  <!-- ========================================== -->
+  <header id="mainNavbar" class="navbar hidden">
+    <div class="navbar-brand">
+      <span class="logo-text">CareScan 🏥</span>
+      <span id="roleBadge" class="badge">الممرض</span>
+    </div>
+    
+    <nav class="nav-links">
+      <button class="nav-btn active" id="navHome">الرئيسية</button>
+      <button class="nav-btn" id="navArchive">الأرشيف الشهري</button>
+    </nav>
+
+    <div class="user-info">
+      <span id="currentUsername">محمود</span>
+      <button id="logoutBtn" class="btn btn-outline-danger btn-sm">خروج</button>
+    </div>
+  </header>
+
+  <main class="main-content hidden" id="mainAppLayout">
+    
+    <!-- ========================================== -->
+    <!-- 2. الشاشة الرئيسية (DASHBOARD & QUEUE)     -->
+    <!-- ========================================== -->
+    <section id="dashboardScreen" class="app-screen">
+      
+      <!-- كارت الإجراء السريع (زرار الكاميرا) -->
+      <div class="scan-cta-card">
+        <div class="cta-info">
+          <h3>مسح كارت تأمين جديد</h3>
+          <p>استخدم الكاميرا لالتقاط واستخراج البيانات بالـ OCR تلقائياً</p>
+        </div>
+        <button id="openScanModalBtn" class="btn btn-success btn-lg">
+          📷 فتح الكاميرا والتقاط
+        </button>
+      </div>
+
+      <!-- كروت الإحصائيات السريعة -->
+      <div class="stats-grid">
+        <div class="stat-card yellow">
+          <h4>الكشوفات المعلقة</h4>
+          <span class="stat-number" id="pendingCount">3</span>
+        </div>
+        <div class="stat-card green">
+          <h4>حالات اليوم المعتمدة</h4>
+          <span class="stat-number" id="approvedTodayCount">12</span>
+        </div>
+        <div class="stat-card red">
+          <h4>الملغاة (Trash)</h4>
+          <span class="stat-number" id="trashCount">1</span>
+        </div>
+      </div>
+
+      <!-- قائمة الكشوفات المعلقة (Pending Queue) -->
+      <div class="section-container">
+        <div class="section-header">
+          <h3>⏳ قائمة الكشوفات المعلقة (Pending Queue)</h3>
+          <span class="sub-text">راجع البيانات الممسوحة واضغط Done لتأكيد رقم النموذج أو No للإلغاء</span>
+        </div>
+
+        <div class="queue-grid" id="pendingQueueContainer">
+          
+          <!-- نموذج بطاقة معلقة (Dynamic Item Demo) -->
+          <div class="queue-card" id="card-1">
+            <div class="card-img-wrapper">
+              <img src="https://via.placeholder.com/300x180?text=Insurance+Card" alt="صورة الكارت">
+            </div>
+            <div class="card-details">
+              <span class="patient-name">أحمد محمود علي</span>
+              <span class="card-id">رقم التأمين: 987654321</span>
+              <span class="provider">الشركة: Bupa Health</span>
+              <span class="time-stamp">الوقت: 10:15 AM</span>
+            </div>
+            <div class="card-actions">
+              <button class="btn btn-success action-done" onclick="openClaimModal(1)">Done ✅</button>
+              <button class="btn btn-danger action-no" onclick="moveToTrash(1)">No ❌</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- 3. شاشة الأرشيف الشهري (MONTHLY ARCHIVE)   -->
+    <!-- ========================================== -->
+    <section id="archiveScreen" class="app-screen hidden">
+      <div class="archive-header">
+        <h3>📂 الأرشيف والتخزين الشهري</h3>
+        
+        <div class="archive-filters">
+          <select id="archiveMonth">
+            <option value="10-2026">أكتوبر 2026</option>
+            <option value="09-2026">سبتمبر 2026</option>
+            <option value="08-2026">أغسطس 2026</option>
+          </select>
+          <button class="btn btn-primary" id="exportReportBtn">📥 تصدير التقرير (Excel/PDF)</button>
+        </div>
+      </div>
+
+      <div class="table-responsive">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>رقم النموذج (Claim Form)</th>
+              <th>اسم المريض</th>
+              <th>رقم التأمين</th>
+              <th>شركة التأمين</th>
+              <th>تاريخ الإدخال</th>
+              <th>الحالة</th>
+            </tr>
+          </thead>
+          <tbody id="archiveTableBody">
+            <tr>
+              <td><code>CLM-2026-0012</code></td>
+              <td>محمد السيد</td>
+              <td>123456789</td>
+              <td>AXA Egypt</td>
+              <td>03/10/2026 - 09:30 AM</td>
+              <td><span class="badge badge-success">مكتمل ومخزن</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ========================================== -->
+  <!-- 4. نافذة الكاميرا وقراءة البيانات (SCAN MODAL) -->
+  <!-- ========================================== -->
+  <div id="scanModal" class="modal-overlay hidden">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>مسح كارت التأمين</h3>
+        <button class="close-modal-btn" id="closeScanModalBtn">&times;</button>
+      </div>
+      
+      <div class="modal-body">
+        <div class="camera-frame">
+          <div class="guide-box">ضع كارت التأمين داخل الإطار</div>
+          <!-- عنصر الفيديو أو معاينة الكاميرا -->
+          <div class="camera-placeholder">📷 [معاينة الكاميرا الحية]</div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-primary btn-block" id="captureBtn">التقاط الصورة وإرسال للـ Pending Queue</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- نافذة إدخال رقم النموذج (CLAIM FORM MODAL) -->
+  <!-- ========================================== -->
+  <div id="claimModal" class="modal-overlay hidden">
+    <div class="modal-card modal-sm">
+      <div class="modal-header">
+        <h3>تأكيد الكشف وحفظ البيانات</h3>
+        <button class="close-modal-btn" id="closeClaimModalBtn">&times;</button>
+      </div>
+      
+      <div class="modal-body">
+        <p class="modal-desc">أدخل رقم النموذج (Claim Form Number) لربط الحركة مع الأرشيف الشهري:</p>
+        <div class="form-group">
+          <label for="claimFormNumber">رقم الاستمارة / Claim ID</label>
+          <input type="text" id="claimFormNumber" placeholder="مثال: CLM-2026-089" required>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-success btn-block" id="confirmSaveClaimBtn">تأكيد وحفظ تلقائي</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
